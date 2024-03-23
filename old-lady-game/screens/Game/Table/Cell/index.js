@@ -1,18 +1,44 @@
-import { View, Image, Pressable } from 'react-native';
+import React from 'react';
+import { View, Image, Pressable, StyleSheet } from 'react-native';
 
 const Cell = ({ id, cellState, onClick }) => {
-    
+    const renderContent = () => {
+        switch (cellState) {
+            case 1:
+                return <Image source={require('../../../../assets/pieces/peca1.jpg')} style={styles.image} />;
+            case 2:
+                return <Image source={require('../../../../assets/pieces/peca2.png')} style={styles.image} />;
+            default:
+                return null;
+        }
+    };
+
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Pressable 
-          onLongPress={() => {}} // Deve cancelar o toque
-          onPressIn={() => {}} // Deve fornecer feedback visual do quadrado escolhido
-          onPressOut={() => onClick(id)} // Deve fazer a jogada usando o onClick
-        >
-            {/* Aqui deve ficar uma a parte visual, decidida pelo cellState se é X, O ou nada. Usar os assets peca1 e peca2 */}
+        <Pressable onPress={() => onClick(id)} style={styles.pressable}>
+            <View style={styles.cell}>
+                {renderContent()}
+            </View>
         </Pressable>
-      </View>
     );
-  }
+}
+
+const styles = StyleSheet.create({
+    pressable: {
+        flex: 1
+    },
+    cell: {
+        width: '100%',
+        height: '100%',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    image: {
+        width: '80%',
+        height: '80%',
+        resizeMode: 'contain'
+    }
+});
 
 export default Cell;
+

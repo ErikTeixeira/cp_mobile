@@ -6,8 +6,8 @@ const MainNavigator = () => {
     const Stack = createNativeStackNavigator();
     return (
         <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={Home} />
-            {/* Precisamos adicionar a tela do jogo */}
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="Game" component={Game} />
         </Stack.Navigator>
     )
 }

@@ -1,65 +1,65 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import InvalidMoveDialog from '../../components/InvalidMoveDialog'
-import EndGameDialog from '../../components/EndGameDialog'
-import { initialTableState, fullTable, hasWinner } from './gameRules';
+import InvalidMoveDialog from '../../components/InvalidMoveDialog';
+import EndGameDialog from '../../components/EndGameDialog';
+import { initialTableState, fullTable, hasWinner, isValidPlay } from './gameRules';
 import GameTable from './Table';
 import TurnRecorder from './TurnRecorder';
 
-const PLAYERS_NAME = ['Jogador 1', 'Jogador 2'] // Cuidado!! PLAYERS_NAME[1] = 'Jogador 2'!! 
-                                                // É preciso diminuir 1 do do index do tableState
-                                                // para usar do jeito que estão pensando
+const PLAYERS_NAME = ['Jogador 1', 'Jogador 2'];
 
 const GameScreen = ({ navigation }) => {
   const [invalidMoveDialog, setInvalidMoveDialog] = useState(false);
-  const [endGameDialog, setEndGameDialog] = useState(false)
+  const [endGameDialog, setEndGameDialog] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false); // State para controlar se o jogo terminou
   const [activePlayer, setActivePlayer] = useState(1);
-  const [dialogState, setDialogState] = useState({
-    text: '',
-    isOpen: false,
-    onClick: () => {}
-  });
-  const [table, setTable] = useState(initialTableState); // Dica: Só teremos renderização ao substituir o array usanto setTable
+  const [table, setTable] = useState(initialTableState);
 
-  const endGameText = ''; // usar ternário para decidir o texto
-                          // Se houver vencedor é um texto declarando o vencedor,
-                          // se não, é um texto declarando empate
+  const endGameText = hasWinner(table) ? `${PLAYERS_NAME[activePlayer - 1]} ganhou!` : fullTable(table) ? 'Empate!' : '';
 
   const resetGame = () => {
-    // Caso o jogador queira jogar novamente, quais são os states que devem ser resetados?
-    // Para qual valor eles precisam voltar?
+    setTable(initialTableState);
+    setActivePlayer(1);
+    setEndGameDialog(false); // Resetando o estado do dialog de fim de jogo
+    setGameEnded(false); // Reiniciando o estado do jogo terminado
   }
 
   const onCellClicked = (cellId) => {
-    // Precisamos verificar se a jogada é válida
-    //
-    // Se não for, mostramos o dialog de jogada inválida
-    //
-    // Se for, realizamos a jogada, e precisamos verificar
-    // se o jogo acabou (empate ou vitória)
-    // 
-    // Caso não tenha acabado, passar a jogada para o próximo jogador
-    //
-    // Caso tenha acabado, mostrar o EndGameDialog
+    if (!gameEnded) { // Verificar se o jogo não terminou
+      if (isValidPlay(cellId, table)) {
+        const newTable = [...table];
+        newTable[cellId] = activePlayer;
+        setTable(newTable);
+
+        if (hasWinner(newTable)) {
+          setEndGameDialog(true);
+          setGameEnded(true); // Marcar o jogo como terminado
+        } else if (fullTable(newTable)) {
+          setEndGameDialog(true);
+          setGameEnded(true); // Marcar o jogo como terminado
+        } else {
+          setActivePlayer(activePlayer === 1 ? 2 : 1);
+        }
+      } else {
+        setInvalidMoveDialog(true); // Alterar para true para exibir o diálogo de jogada inválida
+      }
+    }
   }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-      <TurnRecorder
-        playerName={PLAYERS_NAME[activePlayer - 1]}
-      />
-      <GameTable
-        // 
-      />
+      <TurnRecorder playerName={PLAYERS_NAME[activePlayer - 1]} />
+      <GameTable onCellClicked={onCellClicked} tableState={table} />
       <EndGameDialog
         isOpen={endGameDialog}
         resultText={endGameText}
-        onClickYes={() => {}} // O que acontece se o jogador quiser jogar novamente?
-        onClickNo={() => {}} // Navegar de volta a tela de home
+        onClickYes={resetGame}
+        onClickNo={() => navigation.navigate('Home')}
       />
       <InvalidMoveDialog
+        text="Jogada inválida"
         isOpen={invalidMoveDialog}
-        onClickClose={() => setInvalidMoveDialog(false)}
+        onClickClose={() => setInvalidMoveDialog(false)} 
       />
     </View>
   );

@@ -1,9 +1,20 @@
-import { View } from "react-native"
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-// Esse componente deve mostrar o jogador ativo, ou seja,
-// O que tem a jogada a fazer
-const TurnRecorder = ({playerName}) => {
-    return (<View>
+const TurnRecorder = ({ playerName }) => {
+    return (
+        <View style={styles.container} >
+            <Text>Jogador Ativo: {playerName}</Text>
+        </View>
+    );
+};
 
-    </View>)
-}
+const styles = StyleSheet.create({
+    container: {
+    padding: 0
+    },
+  });
+  
+
+
+export default TurnRecorder;

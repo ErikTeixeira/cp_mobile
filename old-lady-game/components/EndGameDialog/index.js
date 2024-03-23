@@ -1,41 +1,42 @@
-import {Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+// EndGameDialog.js
+import React from 'react';
+import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 
-// Não é necessário mexer na lógica do componente. Dependendo de como for utilizá-lo, pode ser necessário mexer no visual
-const EndGameDialog = ({resultText, isOpen, onClickYes, onClickNo}) => {
+const EndGameDialog = ({ resultText, isOpen, onClickYes, onClickNo }) => {
   return (
     <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isOpen}
+      animationType="fade"
+      transparent={true}
+      visible={isOpen}
     >
-        <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-                <Text style={styles.modalTitle}>
-                    {resultText}
-                </Text>
-                <Text style={styles.modalText}>
-                    {'Deseja jogar novamente?'}
-                </Text>
-                <View style={{flexDirection: 'row', justifyContent: 'space-around', gap: '30px'}}>
-                  <Pressable
-                      style={[styles.button, styles.buttonYes]}
-                      onPress={onClickYes}
-                  >
-                      <Text style={styles.buttonText}>
-                          Sim
-                      </Text>
-                  </Pressable>
-                  <Pressable
-                      style={[styles.button, styles.buttonNo]}
-                      onPress={onClickNo}
-                  >
-                      <Text style={styles.buttonText}>
-                          Não
-                      </Text>
-                  </Pressable>
-                </View>
-            </View>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalTitle}>
+            {resultText}
+          </Text>
+          <Text style={styles.modalText}>
+            {'Deseja jogar novamente?'}
+          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', gap: 30 }}>
+            <Pressable
+              style={[styles.button, styles.buttonYes]}
+              onPress={onClickYes}
+            >
+              <Text style={styles.buttonText}>
+                Sim
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, styles.buttonNo]}
+              onPress={onClickNo}
+            >
+              <Text style={styles.buttonText}>
+                Não
+              </Text>
+            </Pressable>
+          </View>
         </View>
+      </View>
     </Modal>
   );
 };
