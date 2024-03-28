@@ -41,12 +41,13 @@ const Table = ({ onCellClicked, tableState }) => {
 
 const styles = StyleSheet.create({
   table: {
-    width: "60%", 
-    height: "10%",
+    width: "60%",
+    aspectRatio: 1,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
+    flex: 1,
   },
 });
 

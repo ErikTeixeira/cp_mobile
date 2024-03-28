@@ -41,7 +41,7 @@ const GameScreen = ({ navigation }) => {
           setActivePlayer(activePlayer === 1 ? 2 : 1);
         }
       } else {
-        setInvalidMoveDialog(true); // Alterar para true para exibir o diálogo de jogada inválida
+        setInvalidMoveDialog(true); 
       }
     }
   }

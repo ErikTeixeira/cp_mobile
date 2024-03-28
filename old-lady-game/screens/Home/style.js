@@ -1,16 +1,12 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 
-const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     viewHome: {
         flex: 1,
         backgroundColor: "#fff",
         alignItems: "center",
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
         paddingTop: 30,
-        marginTop: 15,
     },
     titleHome: {
         fontSize: 28,
@@ -25,8 +21,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     imageHome: {
-        width: windowWidth * 0.8,
-        height: "80%",
+        width: "20rem",
+        height: "25rem",
         borderRadius: 20,
     },
     buttonPlay: {

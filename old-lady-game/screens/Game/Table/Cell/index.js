@@ -5,7 +5,7 @@ const Cell = ({ id, cellState, onClick }) => {
     const renderContent = () => {
         switch (cellState) {
             case 1:
-                return <Image source={require('../../../../assets/pieces/peca1.jpg')} style={styles.image} />;
+                return <Image source={require('../../../../assets/pieces/peca1.png')} style={styles.image} />;
             case 2:
                 return <Image source={require('../../../../assets/pieces/peca2.png')} style={styles.image} />;
             default:
@@ -24,14 +24,14 @@ const Cell = ({ id, cellState, onClick }) => {
 
 const styles = StyleSheet.create({
     pressable: {
-        flex: 1
+        flex: 1,
     },
     cell: {
         width: '100%',
-        height: '100%',
+        aspectRatio: 1,
         borderWidth: 2,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     image: {
         width: '80%',
